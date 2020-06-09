@@ -106,7 +106,7 @@ plot_pdf_by_stat <- function(distribution = "norm",
       upper_stat_label <- upper_stat %>% scales::number(accuracy = 0.01)
 
 
-      if(is.na(annotate_pos_y)){
+      if(!is.na(annotate_pos_y)){
         annotate_pos_y <- annotate_pos_y
       }else{
         max_density <- baseg$data$y %>% max()
@@ -157,7 +157,12 @@ plot_pdf_by_stat <- function(distribution = "norm",
 
     stat_label <- str_glue("{p_lower} <= {scales::number(stat_value,accuracy = 0.01)} => {p_upper}")
 
-    max_density <- baseg$data$y %>% max()
+    if(!is.na(annotate_pos_y)){
+      annotate_pos_y <- annotate_pos_y
+    }else{
+      max_density <- baseg$data$y %>% max()
+      annotate_pos_y <- -max_density/15
+    }
 
     final_graph <- g2 +
       geom_segment(aes(x = stat_value,
@@ -166,7 +171,7 @@ plot_pdf_by_stat <- function(distribution = "norm",
                        yend = dFUN(stat_value, ...)),
                    color = line_color) +
       annotate(geom = "text", x = stat_value,
-               y = -max_density/15, label = stat_label, size = 5)
+               y = annotate_pos_y, label = stat_label, size = 5)
 
 
   }
