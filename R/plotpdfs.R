@@ -10,6 +10,7 @@
 #' @import tibble
 #' @import dplyr
 #' @import stringr
+#' @import rlang
 #' @importFrom rlang .data
 #' @export
 
@@ -103,24 +104,31 @@ plot_pdf_by_stat <- function(distribution = "norm",
       lower_stat_label <- lower_stat %>% scales::number(accuracy = 0.01)
       upper_stat_label <- upper_stat %>% scales::number(accuracy = 0.01)
 
-      max_density <- baseg$data$y %>% max()
+
+      if(is.na(annotate_pos_y)){
+        annotate_pos_y <- annotate_pos_y
+      }else{
+        max_density <- baseg$data$y %>% max()
+        annotate_pos_y <- -max_density/15
+      }
+
 
       final_graph <- g2 +
         annotate(geom = "text",
                  x = mean(c(xrange[1],lower_stat)),
-                 y = -max_density/15,
+                 y = annotate_pos_y,
                  label = lower_perc_label) +
         annotate(geom = "text",
                  x = mean(c(xrange[2],upper_stat)),
-                 y = -max_density/15,
+                 y = annotate_pos_y,
                  label = upper_perc_label)  +
         annotate(geom = "text",
                  x = mean(stat_value),
-                 y = -max_density/15,
+                 y = annotate_pos_y,
                  label = middle_perc_label) +
-        annotate(geom = "text", x = lower_stat, y = -max_density/15,
+        annotate(geom = "text", x = lower_stat, y = annotate_pos_y,
                  label = lower_stat_label) +
-        annotate(geom = "text", x = upper_stat, y = -max_density/15,
+        annotate(geom = "text", x = upper_stat, y = annotate_pos_y,
                  label = upper_stat_label)
     }
 
