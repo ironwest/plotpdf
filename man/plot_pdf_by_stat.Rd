@@ -9,6 +9,7 @@ plot_pdf_by_stat(
   xrange = c(-3, 3),
   stat_value,
   side = "lower",
+  annotate_pos_y = NA,
   line_color = "red",
   area_color = "deeppink2",
   ...
@@ -22,6 +23,8 @@ plot_pdf_by_stat(
 \item{stat_value}{Statistical value to show on graph.}
 
 \item{side}{Either, "lower" "upper" "two-side-inner" or "two-side-outer"}
+
+\item{annotate_pos_y}{position of annotation (default to NA.) Adjust when annotation appears in weird position.}
 
 \item{line_color}{color for vertical line at stat_value.}
 
