@@ -40,6 +40,7 @@ plot_pdf <- function(distribution, xrange, ...){
 #' @param side Either, "lower" "upper" "two-side-inner" or "two-side-outer"
 #' @param line_color color for vertical line at stat_value.
 #' @param area_color color for fill aesthetics in graph.
+#' @param annotate_pos_y position of annotation (default to NA.) Adjust when annotation appears in weird position.
 #' @param ... Arguments passed on to distribution. eg mean=1, sd = 2 for "norm".
 #' @import ggplot2
 #' @import magrittr
@@ -49,7 +50,7 @@ plot_pdf <- function(distribution, xrange, ...){
 
 plot_pdf_by_stat <- function(distribution = "norm",
                              xrange = c(-3,3),
-                             stat_value, side = "lower",
+                             stat_value, side = "lower", annotate_pos_y = NA,
                              line_color = "red", area_color = "deeppink2",...){
 
   dFUN <- eval(parse(text = str_c("d", distribution)))
